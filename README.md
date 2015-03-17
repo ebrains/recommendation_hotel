@@ -1,2 +1,2 @@
-# recommendation
-It's travel destination project repository made by Yanqiao Zhan and Haichen Zhua.
+#recommendation
+It's travel destination project repository maintained by Yanqiao Zhan and Haichen Zhua.
