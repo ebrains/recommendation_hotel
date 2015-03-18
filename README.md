@@ -15,7 +15,7 @@
 }
 
  *  RECOMMEND
-* Require for recommendation based on user selected popular: post a json data, the key is destination id, value is -1
+* Require for recommendation based on user selected popular: post a json data the name of json is "select", the key is destination id, value is -1
 {  
    "id1":-1,
    "id2":-1,
