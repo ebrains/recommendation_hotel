@@ -16,7 +16,8 @@
 using namespace std;
 
 unordered_map<string,vector<pair<int,string>>>ranking;
-void testByLine(string filename)//
+unordered_map<string, int>title;
+void testByLine(string filename,int titleindex)//
 {
     ifstream fin("./Review_Texts/"+filename);
     string s;
@@ -24,6 +25,7 @@ void testByLine(string filename)//
     string valueschema="<Overall>";
     string author;
     string hotelname=filename.substr(filename.find("_")+1,filename.find(".")-filename.find("_")-1);
+    title[hotelname]=titleindex;
     int overall;
     while( getline(fin,s) )
     {
@@ -42,9 +44,11 @@ void listallfile()
 {
     DIR *dir;
     struct dirent *ent;
+    int titleindex=0;
     if ((dir = opendir ("./Review_Texts")) != NULL) {
         while ((ent = readdir (dir)) != NULL) {//loop all file in directory
-            testByLine(ent->d_name);//ent->d_name is the file name
+            testByLine(ent->d_name,titleindex);//ent->d_name is the file name
+            titleindex++;
         }
         closedir (dir);
     }
@@ -53,29 +57,35 @@ void listallfile()
 //hotel hashmap unordered_map<string,int>; find index by hotel name
 //new a vector<vector<int>>
 //keep the vector vector the same title with city vector
-vector<vector<int>> map2vectorvector()
+
+vector<vector<int>> map2vectorvector(int limit)//use who evaluates less than limit will be ignore
 {
+    cout<<ranking.size()<<endl;
+    for(unordered_map<string, vector<pair<int, string>>>::iterator it=ranking.begin();it!=ranking.end();)
+    {
+        if(it->second.size()<limit)
+        {
+            it=ranking.erase(it);
+        }
+        else it++;
+    }
     vector<vector<int>>result;
-    
+    for(unordered_map<string, vector<pair<int,string>>>::iterator it=ranking.begin();it!=ranking.end();it++)
+    {
+        vector<int>newline=vector<int>(title.size(),-1);
+        for(int i=0;i<it->second.size();i++)
+        {
+            string hotlename=it->second[i].second;
+            int totalvalue=it->second[i].first;
+            newline[title[hotlename]]=totalvalue;
+        }
+        result.push_back(newline);
+    }
     return result;
 }
 int main(int argc, const char * argv[]) {
     listallfile();
-    int three=0;
-    for(unordered_map<string,vector<pair<int,string>>>::iterator it=ranking.begin();it!=ranking.end();it++)
-    {
-        
-        if(it->second.size()>=6){
-            cout<<it->first<<endl;
-        for(int i=0;i<it->second.size();i++)
-        {
-            cout<<it->second[i].first<<"  "<<it->second[i].second<<endl;
-        }
-        cout<<"-----------"<<endl;
-            three++;
-        }
-    }
-    
-    cout<<ranking.size()<<"   "<<three<<endl;
+    vector<vector<int>>matrix=map2vectorvector(5);
+    cout<<ranking.size()<<endl;
     return 0;
 }
