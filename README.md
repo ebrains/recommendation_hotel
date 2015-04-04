@@ -2,7 +2,7 @@
 
 ----
 
- It's travel destination project repository maintained by Yanqiao Zhan and Haichen Zhua.
+ It's travel destination project repository maintained by Yanqiao Zhan and Haichen Zhu.
 --------------
   communication between front-end and back-end:
  * POPULAR
