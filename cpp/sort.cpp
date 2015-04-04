@@ -5,7 +5,7 @@ using namespace std;
 
 int *bubbleSort(int* arr, int len)
 {
-	for(int i=0; i<len; i++
+	for(int i=0; i<len; i++)
 	{
 		for(int j=0; j<len-i; j++)
 		{	
@@ -42,6 +42,5 @@ int main(int argc, char **argv)
 	free(a);
 	cout<<endl;
 	return 1;
-	
 	
 }
