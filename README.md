@@ -2,30 +2,17 @@
 
 ----
 
- It's travel destination project repository maintained by Yanqiao Zhan and Haichen Zhu.
+ It's hotel recommender system maintained by Yanqiao Zhan and Haichen Zhu.
 --------------
-  communication between front-end and back-end:
- * POPULAR
-*  Require for most popular destination: post a "popular"
-*  Answer to most popular destination: ordered destination id(from most popular to least popular)json data  
-{  
-   "id1":1,
-   "id2":2,
-   "id3":3
-}
 
- *  RECOMMEND
-* Require for recommendation based on user selected popular: post a json data the name of json is "select", the key is destination id, value is -1
-{  
-   "id1":-1,
-   "id2":-1,
-   "id3":-1
-}
-* Answer to recommendation using json data, the key is destination id and value is its sort order
-{  
-   "id1":1,
-   "id2":2,
-   "id3":3,
-   "id4":4,
-   "id5":5
-}
+For the users who rate less than 4 times, we ignore them.
+For the anonymous uers, like "A TripAdvisor Member", we ignore them.
+
+We use matrix normalizing to deal with sparse problem. For every non-empty cell, substract it with the column average value and row average value; for empty cell, keep it as 0.
+ 
+We use item-based CF, use adjusted cosine to calculate the similarities between every two items.
+
+If result is less than k(we want to return top k), simply merge most popular and item-based CF, return merged answer.
+
+
+ 
